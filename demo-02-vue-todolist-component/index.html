@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Todo List</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>TODO</h2>
+      <input
+        @keydown.enter="addTask"
+        type="text"
+        v-model="task.content"
+        placeholder="试试编写任务"
+      />
+      <ul>
+        <todo-item
+          v-for="(item, index) in list"
+          :key="index"
+          :content="item.content"
+          @delete="removeTask"
+        ></todo-item>
+      </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+      // 全局注册
+      // Vue.component('MyComponentName', { /* ... */ })
+      
+      // 局部注册
+      let TodoItem = {
+        props: ["content"],
+        template: "<li @click='handleItemClick'>{{content}}</li>",
+        methods: {
+          handleItemClick: function(index) {
+            this.$emit('delete', index);
+          }
+        },
+      };
+      new Vue({
+        el: "#app",
+        components: {
+          TodoItem
+        },
+        data: {
+          list: [],
+          task: {
+            content: "",
+            finished: false
+          }
+        },
+        methods: {
+          addTask: function() {
+            if (this.task.content !== "") {
+              this.list.push(this.task);
+              this.task = {
+                content: "",
+                finished: false
+              };
+            }
+          },
+          removeTask: function(index) {
+            this.list.splice(index, 1);
+          },
+        }
+      });
+    </script>
+  </body>
+</html>
