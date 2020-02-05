@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+    <style>
+      .app-wper {
+        max-width: 480px;
+        margin: 30px auto;
+        border: 1px solid #f3f3f3;
+        border-radius: 6px;
+        padding: 15px;
+        box-shadow: 0px 2px 10px 4px #ccc;
+      }
+      h2 {
+        font-weight: normal;
+        color: #777;
+        text-align: center;
+      }
+      .edit {
+        display: block;
+        width: 80%;
+        height: 35px;
+        line-height: 35px;
+        margin: 30px auto;
+        box-sizing: border-box;
+        padding: 0 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        outline: 0;
+        box-shadow: 0 0 5px #ccc;
+      }
+      .list {
+        width: 80%;
+        margin: 0 auto;
+      }
+      .unit {
+        padding: 15px 0;
+      }
+      .border {
+        border-top: 1px solid #f3f3f3;
+      }
+      .unit span {
+        font-size: 16px;
+        color: #4a4a4a;
+      }
+      .unit .finished {
+        text-decoration: line-through;
+        color: #ccc;
+      }
+      .dele {
+        float: right;
+        color: #fff;
+        background-color: red;
+        padding: 3px 10px;
+        font-size: 12px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .empty {
+        font-size: 13px;
+        color: #ccc;
+        text-align: center;
+        padding: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" class="app-wper">
+      <h2>TODO</h2>
+      <input
+        class="edit"
+        @keydown.enter="addTask"
+        type="text"
+        v-model="task.content"
+        placeholder="试试编写任务"
+      />
+      <div class="list">
+        <p v-if="list.length === 0" class="empty">
+          暂无任务
+        </p>
+        <div
+          :class="{border: list.length > 1}"
+          class="unit"
+          v-for="(item, index) of list"
+        >
+          <label>
+            <input
+              @click="changeStatus(index)"
+              :checked="item.finished"
+              type="checkbox"
+            />
+            <span :class="{'finished': item.finished}">{{item.content}}</span>
+          </label>
+          <a @click="removeTask(index)" class="dele">删除</a>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          list: [],
+          task: {
+            content: '',
+            finished: false
+          },
+        },
+        methods: {
+          addTask: function() {
+            if(this.task.content !== '') {
+              this.list.push(this.task);
+              this.task = {
+                content: '',
+                finished: false
+              };
+            }
+          },
+          removeTask: function(index) {
+            this.list.splice(index, 1);
+          },
+          changeStatus: function(index) {
+            let currentStatus = this.list[index].finished;
+            this.list[index].finished = !currentStatus;
+          }
+        },
+      })
+    </script>
+  </body>
+</html>
