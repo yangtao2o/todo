@@ -1,13 +1,20 @@
 <template>
   <div class="tab" v-if="lists.length > 0">
-    <div>
+    <div class="nums-wrap">
       <span>剩 {{ unFinishedTask }} 条任务</span>
     </div>
     <div class="btn-wrap">
-      <a @click="handleAllTasks">全部项</a>
-      <a @click="handleUnfinished">未完成</a>
-      <a @click="handleFinished">已完成</a>
-      <a class="dele" @click="handleDeleted">删除</a>
+      <a
+        v-for="(state, index) of status"
+        :class="{ active: filter === state }"
+        :key="index"
+        @click="handleClick(state)"
+        >{{ state }}</a
+      >
+    </div>
+    <div class="clear-wrap">
+      <a @click="handleDele">删除</a>
+      <a @click="handleClear">清空</a>
     </div>
   </div>
 </template>
@@ -19,7 +26,16 @@ export default {
     lists: {
       type: Array,
       required: true
+    },
+    filter: {
+      type: String,
+      required: true
     }
+  },
+  data() {
+    return {
+      status: ["全部", "未完成", "已完成"]
+    };
   },
   computed: {
     unFinishedTask() {
@@ -27,17 +43,14 @@ export default {
     }
   },
   methods: {
-    handleAllTasks() {
-      this.$emit("all");
+    handleClick(state) {
+      this.$emit("toggle", state);
     },
-    handleFinished() {
-      this.$emit("done");
+    handleDele() {
+      this.$emit("dele");
     },
-    handleUnfinished() {
-      this.$emit("undone");
-    },
-    handleDeleted() {
-      this.$emit("delete");
+    handleClear() {
+      this.$emit("clear");
     }
   }
 };
@@ -50,15 +63,21 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-
-.btn-wrap > a {
-  color: #fff;
-  background: #0b97ec;
-  padding: 3px 10px;
+.nums-wrap {
+  font-size: 13px;
+}
+.btn-wrap > a,
+.clear-wrap > a {
+  padding: 3px 5px;
   font-size: 12px;
   margin-left: 5px;
   border-radius: 4px;
   cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-wrap > a.active,
+.clear-wrap > a {
+  border-color: #ccc;
 }
 .empty {
   font-size: 13px;

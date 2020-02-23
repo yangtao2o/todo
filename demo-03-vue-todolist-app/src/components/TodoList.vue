@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <label :for="list.id" :class="{ finished: list.finished }">
-      <input :id="list.id" @click="handleChange" type="checkbox" />
+      <input :id="list.id" @click="handleChange" v-model="list.finished" type="checkbox" />
       <span>{{ list.content }}</span>
     </label>
     <a class="dele" @click="handleRemove">X</a>

@@ -9,7 +9,7 @@
     />
     <div v-if="lists.length > 0">
       <todo-list
-        v-for="list of lists"
+        v-for="list of filterTodoList"
         :list="list"
         :key="list.id"
         @change="status"
@@ -18,10 +18,10 @@
     </div>
     <todo-tab
       :lists="lists"
-      @all="allTask"
-      @done="doneTask"
-      @undone="undoneTask"
-      @deleted="deleTask"
+      :filter="filter"
+      @toggle="toggleFilter"
+      @clear="clearAll"
+      @dele="deleteList"
     ></todo-tab>
   </div>
 </template>
@@ -41,9 +41,17 @@ export default {
   data() {
     return {
       lists: [],
-      doneLists: [],
-      undoneLists: []
+      filter: "全部"
     };
+  },
+  computed: {
+    filterTodoList() {
+      if (this.filter === "全部") {
+        return this.lists;
+      }
+      const finished = this.filter === "已完成";
+      return this.lists.filter(list => list.finished === finished);
+    }
   },
   methods: {
     addTask(e) {
@@ -71,10 +79,15 @@ export default {
         }
       });
     },
-    allTask() {},
-    doneTask() {},
-    undoneTask() {},
-    deleTask() {}
+    toggleFilter(state) {
+      this.filter = state;
+    },
+    deleteList() {
+      this.lists = this.lists.filter(list => !list.finished);
+    },
+    clearAll() {
+      this.lists = [];
+    }
   }
 };
 </script>
