@@ -57,7 +57,7 @@ export default {
       return this.lists.filter(list => list.finished === finished);
     }
   },
-  
+
   methods: {
     addTask(e) {
       const content = e.target.value.trim();
@@ -96,7 +96,7 @@ export default {
       localStorage.clear();
     },
     getData() {
-      const data = localStorage.todoListData;
+      const data = localStorage.getItem("todoListData");
       if (data.length > 0) {
         this.lists = JSON.parse(data);
       }
