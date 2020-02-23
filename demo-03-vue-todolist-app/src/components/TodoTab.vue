@@ -4,8 +4,9 @@
       <span>{{ nums }} 条任务</span>
     </div>
     <div class="btn-wrap">
-      <a class="compele" @click="handleFinished">已完成</a>
-      <a class="not-comt" @click="handleUnfinished">未完成</a>
+      <a @click="handleAllTasks">全部项</a>
+      <a @click="handleFinished">已完成</a>
+      <a @click="handleUnfinished">未完成</a>
       <a class="dele" @click="handleDeleted">删除</a>
     </div>
   </div>
@@ -21,14 +22,17 @@ export default {
     }
   },
   methods: {
+    handleAllTasks() {
+      this.$emit("all");
+    },
     handleFinished() {
-      this.$emit('done');
+      this.$emit("done");
     },
     handleUnfinished() {
-      this.$emit('undone');
+      this.$emit("undone");
     },
     handleDeleted() {
-      this.$emit('delete');
+      this.$emit("delete");
     }
   }
 };

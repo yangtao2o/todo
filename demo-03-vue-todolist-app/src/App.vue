@@ -4,12 +4,17 @@
     <input
       class="edit"
       @keydown.enter="addTask"
-      v-model="task.content"
       type="text"
       placeholder="今天要做些什么..."
     />
-    <todo-list :lists="lists" @change="status"></todo-list>
-    <todo-tab :lists="lists" @done="doneTask" @undone="undoneTask" @deleted="deleTask"></todo-tab>
+    <todo-list :lists="lists" @change="status" @remove="removeTask"></todo-list>
+    <todo-tab
+      :lists="lists"
+      @all="allTask"
+      @done="doneTask"
+      @undone="undoneTask"
+      @deleted="deleTask"
+    ></todo-tab>
   </div>
 </template>
 
@@ -18,6 +23,7 @@
 import TodoList from "./components/TodoList.vue";
 import TodoTab from "./components/TodoTab.vue";
 
+let id = 0;
 export default {
   name: "App",
   components: {
@@ -26,36 +32,44 @@ export default {
   },
   data() {
     return {
-      task: {
-        content: "",
-        finished: false
-      },
       lists: [],
       doneLists: [],
       undoneLists: []
     };
   },
   methods: {
-    addTask() {
-      if (this.task.content !== "") {
-        this.lists.push(this.task);
-        this.task = {
-          content: "",
+    addTask(e) {
+      const content = e.target.value;
+      if (content !== "") {
+        this.lists.unshift({
+          id: id++,
+          content,
           finished: false
-        };
+        });
       }
+      e.target.value = '';
     },
-    status(index) {
-      this.lists[index].finished = !this.lists[index].finished;
+    removeTask(id) {
+      this.lists.forEach((list, index) => {
+        if (list.id === id) {
+          this.lists.splice(index, 1);
+          id--;
+          return;
+        }
+      });
     },
-    doneTask() {
+    status(id) {
+      this.lists.forEach(list => {
+        if (list.id === id) {
+          list.finished = !list.finished;
+          return;
+        }
+      });
     },
-    undoneTask() {
-      
-    },
-    deleTask() {
-      this.lists = this.lists.filter(list => list.finished);
-    },
+    allTask() {},
+    doneTask() {},
+    undoneTask() {},
+    deleTask() {}
   }
 };
 </script>
@@ -72,7 +86,7 @@ export default {
 .app-wper {
   max-width: 420px;
   margin: 30px auto;
-  padding: 20px 2%;
+  padding: 20px 2% 30px;
   border: 1px solid #f3f3f3;
   border-radius: 6px;
   box-shadow: 0px 2px 10px 4px #ccc;
