@@ -43,6 +43,11 @@ export default {
       filter: "全部"
     };
   },
+  watch: {
+    lists() {
+      return this.updataData();
+    }
+  },
   computed: {
     filterTodoList() {
       if (this.filter === "全部") {
@@ -52,6 +57,7 @@ export default {
       return this.lists.filter(list => list.finished === finished);
     }
   },
+  
   methods: {
     addTask(e) {
       const content = e.target.value.trim();
@@ -74,6 +80,7 @@ export default {
       this.lists.forEach(list => {
         if (list.id === id) {
           list.finished = !list.finished;
+          this.updataData();
           return;
         }
       });
@@ -86,7 +93,20 @@ export default {
     },
     clearAll() {
       this.lists = [];
+      localStorage.clear();
+    },
+    getData() {
+      const data = localStorage.todoListData;
+      if (data.length > 0) {
+        this.lists = JSON.parse(data);
+      }
+    },
+    updataData() {
+      localStorage.setItem("todoListData", JSON.stringify(this.lists));
     }
+  },
+  mounted() {
+    this.getData();
   }
 };
 </script>
