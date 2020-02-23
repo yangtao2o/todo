@@ -7,7 +7,15 @@
       type="text"
       placeholder="今天要做些什么..."
     />
-    <todo-list :lists="lists" @change="status" @remove="removeTask"></todo-list>
+    <div v-if="lists.length > 0">
+      <todo-list
+        v-for="list of lists"
+        :list="list"
+        :key="list.id"
+        @change="status"
+        @remove="removeTask"
+      ></todo-list>
+    </div>
     <todo-tab
       :lists="lists"
       @all="allTask"
@@ -39,7 +47,7 @@ export default {
   },
   methods: {
     addTask(e) {
-      const content = e.target.value;
+      const content = e.target.value.trim();
       if (content !== "") {
         this.lists.unshift({
           id: id++,
@@ -47,16 +55,13 @@ export default {
           finished: false
         });
       }
-      e.target.value = '';
+      e.target.value = "";
     },
     removeTask(id) {
-      this.lists.forEach((list, index) => {
-        if (list.id === id) {
-          this.lists.splice(index, 1);
-          id--;
-          return;
-        }
-      });
+      this.lists.splice(
+        this.lists.findIndex(list => list.id === id),
+        1
+      );
     },
     status(id) {
       this.lists.forEach(list => {

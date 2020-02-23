@@ -1,25 +1,23 @@
 <template>
-  <div v-if="lists.length > 0">
-    <div class="list" v-for="{ id, content, finished } of lists" :key="id">
-      <label :for="id" :class="{ finished: finished }">
-        <input :id="id" @click="handleChange(id)" type="checkbox" />
-        <span>{{ content }}</span>
-      </label>
-      <a class="dele" @click="handleRemove(id)">X</a>
-    </div>
+  <div class="list">
+    <label :for="list.id" :class="{ finished: list.finished }">
+      <input :id="list.id" @click="handleChange" type="checkbox" />
+      <span>{{ list.content }}</span>
+    </label>
+    <a class="dele" @click="handleRemove">X</a>
   </div>
 </template>
 
 <script>
 export default {
   name: "TodoList",
-  props: ["lists"],
+  props: ["list"],
   methods: {
-    handleChange(id) {
-      this.$emit("change", id);
+    handleChange() {
+      this.$emit("change", this.list.id);
     },
-    handleRemove(id) {
-      this.$emit("remove", id);
+    handleRemove() {
+      this.$emit("remove", this.list.id);
     }
   }
 };

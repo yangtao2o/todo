@@ -1,12 +1,12 @@
 <template>
   <div class="tab" v-if="lists.length > 0">
     <div>
-      <span>{{ nums }} 条任务</span>
+      <span>剩 {{ unFinishedTask }} 条任务</span>
     </div>
     <div class="btn-wrap">
       <a @click="handleAllTasks">全部项</a>
-      <a @click="handleFinished">已完成</a>
       <a @click="handleUnfinished">未完成</a>
+      <a @click="handleFinished">已完成</a>
       <a class="dele" @click="handleDeleted">删除</a>
     </div>
   </div>
@@ -15,10 +15,15 @@
 <script>
 export default {
   name: "TodoTab",
-  props: ["lists"],
+  props: {
+    lists: {
+      type: Array,
+      required: true
+    }
+  },
   computed: {
-    nums() {
-      return this.lists.length > 0 ? this.lists.length : 0;
+    unFinishedTask() {
+      return this.lists.filter(list => !list.finished).length;
     }
   },
   methods: {
