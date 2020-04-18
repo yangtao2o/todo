@@ -1,0 +1,30 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "Some todo examples of learning code language.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangtao2o/todo.git"
+  },
+  "keywords": [
+    "todo",
+    "learn",
+    "react",
+    "vue"
+  ],
+  "author": "yangtao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yangtao2o/todo/issues"
+  },
+  "homepage": "https://github.com/yangtao2o/todo#readme"
+}
