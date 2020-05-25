@@ -27,3 +27,7 @@ localStorage.removeItem("key");
 // 移除所有
 localStorage.clear();
 ```
+
+## 参考资料
+
+- [Redux 示例](https://www.redux.org.cn/docs/introduction/Examples.html)
