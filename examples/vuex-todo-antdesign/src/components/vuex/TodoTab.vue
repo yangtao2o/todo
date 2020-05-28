@@ -62,8 +62,8 @@ export default {
     };
   },
   methods: {
-    handleClick(state) {
-      this.$emit("toggle", state);
+    handleClick(status) {
+      this.$emit("toggle", status);
     },
     handleDele() {
       this.$emit("dele");

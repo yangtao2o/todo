@@ -27,7 +27,6 @@
 import TodoItem from "./TodoItem";
 import TodoTab from "./TodoTab";
 
-let id = 0;
 export default {
   name: "Todo",
   props: {
@@ -39,6 +38,7 @@ export default {
   },
   data() {
     return {
+      id: 0,
       lists: [],
       value: "",
       filter: "all"
@@ -66,12 +66,11 @@ export default {
       const content = e.target.value.trim();
       if (content !== "") {
         this.lists.unshift({
-          id: id++,
+          id: this.id++,
           content,
           finished: false
         });
       }
-      this.value = "";
     },
     removeTask(id) {
       this.lists.splice(
@@ -93,6 +92,7 @@ export default {
     },
     deleteList() {
       this.lists = this.lists.filter(list => !list.finished);
+      this.filter = "all";
     },
     clearAll() {
       this.lists = [];
@@ -101,6 +101,7 @@ export default {
       const data = localStorage.getItem("todoListData");
       if (data && data.length > 0) {
         this.lists = JSON.parse(data);
+        this.id = this.lists[0].id + 1;
       }
     },
     updataData() {
