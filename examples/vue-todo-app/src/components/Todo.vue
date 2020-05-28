@@ -30,7 +30,6 @@
 import TodoList from "./TodoList.vue";
 import TodoTab from "./TodoTab.vue";
 
-let id = 0;
 export default {
   name: "Todo",
   components: {
@@ -39,6 +38,7 @@ export default {
   },
   data() {
     return {
+      id: 0,
       lists: [],
       filter: "全部"
     };
@@ -62,7 +62,7 @@ export default {
       const content = e.target.value.trim();
       if (content !== "") {
         this.lists.unshift({
-          id: id++,
+          id: this.id++,
           content,
           finished: false
         });
@@ -95,9 +95,10 @@ export default {
       localStorage.clear();
     },
     getData() {
-      const data = localStorage.getItem("todoListData");
-      if (data.length > 0) {
-        this.lists = JSON.parse(data);
+      const data = JSON.parse(localStorage.getItem("todoListData"));
+      if (data && data.length > 0) {
+        this.lists = data;
+        this.id = this.lists[0].id + 1;
       }
     },
     updataData() {

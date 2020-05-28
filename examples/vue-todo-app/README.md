@@ -6,6 +6,8 @@
 - 利用 `localStorage` 做本地存储
 - 组件化，可添加、删除某一单独任务，也可统一处理所有条目
 
+![image](https://user-images.githubusercontent.com/19526072/83158260-24bf2000-a137-11ea-8182-36482b2b98bb.png)
+
 ## Project setup
 
 ```bash
@@ -47,9 +49,10 @@ updataData() {
   localStorage.setItem("todoListData", JSON.stringify(this.lists));
 }
 getData() {
-  const data = localStorage.getItem("todoListData");
-  if (data.length > 0) {
-    this.lists = JSON.parse(data);
+  const data = JSON.parse(localStorage.getItem("todoListData"));
+  if (data && data.length > 0) {
+    this.lists = data;
+    this.id = this.lists[0].id + 1;
   }
 }
 ```
