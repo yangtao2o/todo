@@ -47,9 +47,9 @@ export default new Vuex.Store({
       state.filter = status;
     },
     getData(state) {
-      const data = localStorage.getItem("todoListVuexData");
+      const data = JSON.parse(localStorage.getItem("todoListVuexData"));
       if (data && data.length > 0) {
-        state.lists = JSON.parse(data);
+        state.lists = data;
         state.id = state.lists[0].id + 1;
       }
     },

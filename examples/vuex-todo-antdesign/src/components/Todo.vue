@@ -98,9 +98,9 @@ export default {
       this.lists = [];
     },
     getData() {
-      const data = localStorage.getItem("todoListData");
+      const data = JSON.parse(localStorage.getItem("todoListData"));
       if (data && data.length > 0) {
-        this.lists = JSON.parse(data);
+        this.lists = data;
         this.id = this.lists[0].id + 1;
       }
     },
