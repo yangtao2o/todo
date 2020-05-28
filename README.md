@@ -6,11 +6,12 @@
 
 - [vue-todo-vanilla](./examples/vue-todo-vanilla)
 - [vue-todo-vanilla-2](./examples/vue-todo-vanilla-2)
-- [vue-todo-app](./examples/vue-todo-app)
+- [vue-todo-app](./examples/vue-todo-app) —— 使用 Vue、LocalStorage
+- [vuex-todo-antdesign](./examples/vuex-todo-antdesign) —— 使用 Vuex、Antdesign、LocalStorage
 
 ## LocalStorage
 
-比如这个栗子：[vue-todo-app](./examples/vue-todo-app)
+比如这个栗子：[vue-todo-app](./examples/vue-todo-app)，还有这个[vuex-todo-antdesign](./examples/vuex-todo-antdesign)
 
 如果传入 JSON 格式的对象，可以使用 `JSON.stringify()` 这个方法，来将 JSON 转换成为 JSON 字符串，然后将其再通过 `JSON.parse()` 方法转化成 JSON 对象
 
